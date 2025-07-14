@@ -4,20 +4,20 @@ import (
 	"log"
 	"net"
 
-	"www.github.com/M1ralai/tcp-server/cmd/client"
+	"www.github.com/M1ralai/tcp-server/cmd/users"
 )
 
 const ()
 
 type Server struct {
 	serverAddr string
-	users      []client.Client
+	users      []users.User
 }
 
 func NewServer(addr string) *Server {
 	return &Server{
 		serverAddr: addr,
-		users:      []client.Client{},
+		users:      []users.User{},
 	}
 }
 
@@ -41,6 +41,6 @@ func (s *Server) acceptLoop(ls net.Listener) {
 			log.Println("connection established from: ", conn.RemoteAddr())
 		}
 		conn.Write([]byte("Wrlcome to the M1ralai's tcp chat server \n"))
-		s.welcomePage(conn)
+		go s.welcomePage(conn)
 	}
 }
