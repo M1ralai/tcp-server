@@ -100,6 +100,6 @@ func (s *Server) chat(u *users.User) {
 			u.LogOut()
 			return
 		}
-
+		u.Conn.Write([]byte(str))
 	}
 }
