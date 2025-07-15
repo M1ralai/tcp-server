@@ -4,20 +4,21 @@ import (
 	"log"
 	"net"
 
+	"www.github.com/M1ralai/tcp-server/cmd/chat"
 	"www.github.com/M1ralai/tcp-server/cmd/users"
 )
-
-const ()
 
 type Server struct {
 	serverAddr string
 	users      []users.User
+	Chatrooms  []*chat.Chatroom
 }
 
 func NewServer(addr string) *Server {
 	return &Server{
 		serverAddr: addr,
 		users:      []users.User{},
+		Chatrooms:  []*chat.Chatroom{},
 	}
 }
 
@@ -29,6 +30,9 @@ func (s *Server) Run() {
 	} else {
 		log.Println("tcp server started at ", s.serverAddr, "")
 	}
+	cr := chat.NewChatroom("default", nil)
+	cr.SendMessage()
+	s.Chatrooms = append(s.Chatrooms, cr)
 	s.acceptLoop(ls)
 }
 
